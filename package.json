@@ -5,6 +5,9 @@
   "author": "Fangdun Cai <cfddream@gmail.com>",
   "license": "MIT",
   "main": "index.js",
+  "bin": {
+    "migrate": "./bin/migrate.js"
+  },
   "scripts": {
     "test": ""
   },
@@ -16,6 +19,11 @@
     "transwarp"
   ],
   "dependencies": {
+    "commander": "^2.9.0",
+    "debug": "^2.2.0",
     "koa-compose": "^3.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.4"
   }
 }
