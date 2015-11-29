@@ -9,7 +9,9 @@
     "migrate": "./bin/migrate.js"
   },
   "scripts": {
-    "test": ""
+    "test": "mocha --compilers js:babel-core/register --bail --check-leaks test",
+    "test-cov": "babel-node node_modules/.bin/isparta cover node_modules/.bin/_mocha -- -u exports --bail --check-leaks test",
+    "test-travis": "babel-node node_modules/.bin/isparta cover --report lcovonly node_modules/.bin/_mocha -- -u exports --bail --check-leaks test"
   },
   "keywords": [
     "database",
@@ -24,6 +26,8 @@
     "koa-compose": "^3.0.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.2.0",
+    "babel-core": "^6.2.1",
     "mocha": "^2.3.4"
   }
 }
