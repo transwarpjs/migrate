@@ -142,11 +142,10 @@ module.exports = class Migrator extends Emitter {
 
   run() {
     debug('run')
-    var setup = Migrator.require(`${this.root}/setup`) ||
-      ((ctx) => Promise.resolve(ctx))
-    const fn = compose(this.middleware)
+    var setup = Migrator.require(`${this.root}/setup`) || ((ctx, next) => next())
+    const fn = compose([setup].concat(this.middleware))
     const ctx = this.createContext()
-    return fn(ctx).then(() => setup(ctx))
+    return fn(ctx)
   }
 
   toJSON() {
