@@ -69,6 +69,29 @@ program
 .command('create [name]')
 .description('create a new migration file with optional [name]')
 .action((name) => {
+
+  const tmpl = `'use strict'
+
+exports.up = (ctx, next) => {
+  // do something
+  return next()
+}
+
+exports.down = (ctx, next) => {
+  // do something
+  return next()
+}
+`
+  const m = migrate()
+  m
+  .create(name, tmpl)
+  .then(() => {
+    process.exit(0)
+  })
+  .catch(err => {
+    console.log(err)
+    process.exit(1)
+  })
 })
 
 program.parse(process.argv)

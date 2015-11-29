@@ -47,3 +47,11 @@ exports.readdir = (path) => {
     })
   })
 }
+
+exports.now = () => {
+  return (new Date()).toISOString().substring(0, 19).replace(/[-:T]/g, '')
+}
+
+exports.slugify = (str) => {
+  return str.replace(/\.js$/, '').replace(/\s+/g, '-')
+}

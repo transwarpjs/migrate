@@ -97,6 +97,13 @@ module.exports = class Migrator extends Emitter {
     return this.migrate('down', name)
   }
 
+  create(name, tmpl) {
+    const curr = utils.now()
+    if (!name) name = curr
+    else name = `${curr}-${utils.slugify(name)}`
+    return utils.writeFile(`${this.migrationsPath}/${name}.js`, tmpl)
+  }
+
   migrate(direction, name) {
     return this.load().then((json) => this.pos = json.pos)
       .then(() => this._migrate(direction, name))
