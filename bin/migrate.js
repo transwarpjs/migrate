@@ -86,7 +86,9 @@ exports.down = (ctx, next) => {
   const m = migrate()
   m
   .run()
-  .create(name, tmpl)
+  .then(() => {
+    return m.create(name, tmpl)
+  })
   .then(() => {
     process.exit(0)
   })
