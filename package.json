@@ -29,5 +29,8 @@
     "babel-cli": "^6.2.0",
     "babel-core": "^6.2.1",
     "mocha": "^2.3.4"
+  },
+  "engine": {
+    "node": ">= 4"
   }
 }
