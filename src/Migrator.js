@@ -3,6 +3,7 @@
 const debug = require('debug')('transwarp:migrate')
 const compose = require('koa-compose')
 const path = require('path')
+const chalk = require('chalk')
 const Emitter = require('events')
 const Context = require('./Context')
 const Migration = require('./Migration')
@@ -133,6 +134,7 @@ module.exports = class Migrator extends Emitter {
       return (ctx, next) => {
         this.pos += num
         debug(`Position is ${this.pos}`)
+        console.log(chalk.green(direction), m.name)
         return this.save().then(() => m[direction](ctx, next))
       }
     }))
@@ -140,7 +142,8 @@ module.exports = class Migrator extends Emitter {
 
   run() {
     debug('run')
-    var setup = Migrator.require(`${this.root}/setup`) || ((ctx) => Promise.resolve(ctx))
+    var setup = Migrator.require(`${this.root}/setup`) ||
+      ((ctx) => Promise.resolve(ctx))
     const fn = compose(this.middleware)
     const ctx = this.createContext()
     return fn(ctx).then(() => setup(ctx))
