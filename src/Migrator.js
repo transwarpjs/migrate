@@ -131,12 +131,16 @@ module.exports = class Migrator extends Emitter {
 
     const num = direction === 'up' ? 1 : -1
     return compose(migrations.map(m => {
-      return (ctx, next) => {
-        this.pos += num
-        debug(`Position is ${this.pos}`)
-        console.log(chalk.green(direction), m.name)
-        return this.save().then(() => m[direction](ctx, next))
-      }
+      return compose([
+        (ctx, next) => {
+          return m[direction](ctx, next)
+        },
+        (ctx, next) => {
+          this.pos += num
+          debug(`Position is ${this.pos}`)
+          return this.save().then(next)
+        }
+      ])
     }))
   }
 
