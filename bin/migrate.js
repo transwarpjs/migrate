@@ -67,6 +67,7 @@ program
 
 program
 .command('create [name]')
+.alias('c')
 .description('create a new migration file with optional [name]')
 .action((name) => {
 
