@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "index.js",
   "bin": {
-    "migrate": "./bin/migrate.js"
+    "migrate": "./bin/migrate"
   },
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --bail --check-leaks test",
