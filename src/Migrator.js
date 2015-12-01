@@ -131,16 +131,24 @@ module.exports = class Migrator extends Emitter {
 
     const num = direction === 'up' ? 1 : -1
     return compose(migrations.map(m => {
-      return compose([
-        (ctx, next) => {
-          return m[direction](ctx, next)
-        },
-        (ctx, next) => {
-          this.pos += num
-          debug(`Position is ${this.pos}`)
-          return this.save().then(next)
-        }
-      ])
+      return (ctx, next) => {
+        const d       = `${chalk.blue(direction)} ${chalk.dim(m.name)}`
+        const success = `  ${chalk.green(utils.symbols.ok)} ${d}`
+        const error   = `  ${chalk.red(utils.symbols.err)} ${d}`
+        return compose([
+          (ctx, next) => {
+            return m[direction](ctx, next)
+          },
+          (ctx, next) => {
+            this.pos += num
+            debug(`Position is ${this.pos}`)
+            return this.save().then(next)
+          }
+        ])(ctx)
+        .then(() => console.log(success))
+        .then(next)
+        .catch(() => console.log(error))
+      }
     }))
   }
 
