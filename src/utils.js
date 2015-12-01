@@ -55,3 +55,9 @@ exports.now = () => {
 exports.slugify = (str) => {
   return str.replace(/\.js$/, '').replace(/\s+/g, '-')
 }
+
+exports.symbols = {
+  ok: '✓',
+  err: '✖',
+  dot: '․'
+}
