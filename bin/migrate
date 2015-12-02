@@ -1,13 +1,10 @@
 #!/usr/bin/env node
 
+'use strict'
+
 const program = require('commander')
 
 const cwd = process.cwd()
-
-function migrate() {
-  const Migrator = require('../src/Migrator.js')
-  return new Migrator(`${cwd}/db`)
-}
 
 program
 .version('0.0.0')
@@ -98,4 +95,46 @@ exports.down = (ctx, next) => {
   })
 })
 
+program
+.command('status')
+.alias('s')
+.description('list all migrations status')
+.action(() => {
+  const m = migrate()
+  m
+  .run()
+  .then(() => {
+    return m.load().then(data => listStatus(data))
+  })
+  .then(() => {
+    process.exit(0)
+  })
+  .catch(err => {
+    console.log(err)
+    process.exit(1)
+  })
+})
+
 program.parse(process.argv)
+
+function migrate() {
+  const Migrator = require('../src/Migrator')
+  return new Migrator(`${cwd}/db`)
+}
+
+function listStatus(data) {
+  const chalk = require('chalk')
+  const utils = require('../src/utils')
+  const pos = data.pos
+  const migrations = data.migrations
+  migrations.forEach((m, i) => {
+    const d = `${chalk.dim(m)}`
+    let msg = ''
+    if (i < pos) {
+      msg = `  ${chalk.green(utils.symbols.ok)} ${d}`
+    } else {
+      msg = `  ${chalk.gray(utils.symbols.dot)} ${d}`
+    }
+    console.log(msg)
+  })
+}

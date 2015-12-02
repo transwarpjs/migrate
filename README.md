@@ -17,6 +17,7 @@ $ migrate -h
     up|u [name]      migrate up
     down|d [name]    migrate down
     create|c [name]  create a new migration file with optional [name]
+    status|s         list all migrations status
 
   Database migration for Transwarp.
 
