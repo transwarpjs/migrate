@@ -9,8 +9,8 @@ const cwd = process.cwd()
 program
 .version('0.0.0')
 .description('Database migration for Transwarp.')
-.option('--config [path]', 'Location of the database.json file.')
-.option('-e,--env <env>',    'The environment to run the migrations under.', 'dev')
+.option('--config [path]', 'location of the database.json file')
+.option('-e,--env <env>',  'the environment to run the migrations under', 'dev')
 
 program
 .command('up [name]')
@@ -65,8 +65,10 @@ program
 program
 .command('create [name]')
 .alias('c')
+.option('-s, --style <style>', 'convert name to snake/kebab case',
+        /^(snake|kebab)$/, 'snake')
 .description('create a new migration file with optional [name]')
-.action((name) => {
+.action((name, options) => {
 
   const tmpl = `'use strict'
 
@@ -84,7 +86,7 @@ exports.down = (ctx, next) => {
   m
   .run()
   .then(() => {
-    return m.create(name, tmpl)
+    return m.create(name, tmpl, options.style)
   })
   .then(() => {
     process.exit(0)

@@ -52,12 +52,17 @@ exports.now = () => {
   return (new Date()).toISOString().substring(0, 19).replace(/[-:T]/g, '')
 }
 
-exports.slugify = (str) => {
-  return str.replace(/\.js$/, '').replace(/\s+/g, '-')
+exports.slugify = (str, symbol) => {
+  return str.replace(/\.js$/, '').replace(/\s+/g, symbol)
 }
 
 exports.symbols = {
   ok: '✓',
   err: '✖',
   dot: '․'
+}
+
+exports.caseStyles = {
+  snake: '_',
+  kebab: '-'
 }

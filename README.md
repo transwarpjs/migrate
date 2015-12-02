@@ -29,3 +29,17 @@ $ migrate -h
     -e,--env <env>   The environment to run the migrations under.
 
 ```
+
+```sh
+$ migrate create -h
+
+  Usage: create|c [options] [name]
+
+  create a new migration file with optional [name]
+
+  Options:
+
+    -h, --help           output usage information
+    -s, --style <style>  convert name to snake/kebab case
+
+```

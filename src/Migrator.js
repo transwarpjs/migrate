@@ -98,10 +98,11 @@ module.exports = class Migrator extends Emitter {
     return this.migrate('down', name)
   }
 
-  create(name, tmpl) {
+  create(name, tmpl, style) {
     const curr = utils.now()
+    const symbol = utils.caseStyles[style]
     if (!name) name = curr
-    else name = `${curr}-${utils.slugify(name)}`
+    else name = `${curr}${symbol}${utils.slugify(name, symbol)}`
     return utils.writeFile(`${this.migrationsPath}/${name}.js`, tmpl)
   }
 
