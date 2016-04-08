@@ -128,7 +128,7 @@ function listStatus(data) {
   const chalk = require('chalk')
   const utils = require('../src/utils')
   const pos = data.pos
-  const migrations = data.migrations
+  const migrations = data.migrations || Array(0)
   migrations.forEach((m, i) => {
     const d = `${chalk.dim(m)}`
     let msg = ''
